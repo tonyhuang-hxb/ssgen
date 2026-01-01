@@ -71,6 +71,21 @@ class TestHTMLNode(unittest.TestCase):
         res = parent.to_html()
         self.assertEqual(res, '<article class="post"><h1>Title</h1><p>This is a paragraph.</p><div><a href="http://example.com">Link</a></div></article>')
         
+    def test_parent_deeply_nested_to_html(self):
+        leaf = LeafNode("em", "Deep text")
+        parent3 = ParentNode("span", [leaf])
+        parent2 = ParentNode("div", [parent3])
+        parent1 = ParentNode("section", [parent2])
+        res = parent1.to_html()
+        self.assertEqual(res, '<section><div><span><em>Deep text</em></span></div></section>')            
+        
+    def test_parent_multiple_props_to_html(self):
+        child = LeafNode("p", "Content")
+        parent = ParentNode("div", [child], props={"class": "box", "data-type": "example", "id": "unique"})
+        res = parent.to_html()
+        self.assertEqual(res, '<div class="box" data-type="example" id="unique"><p>Content</p></div>')
+        
+        
     def test_parent_empty_children_to_html(self):
         parent = ParentNode("div", [])
         res = parent.to_html()
@@ -88,6 +103,6 @@ class TestHTMLNode(unittest.TestCase):
         parent = ParentNode("wrapper", [child1], props={"role": "main"})
         res = parent.to_html()
         self.assertEqual(res, '<wrapper role="main"><custom-tag data-info="123">Custom Content</custom-tag></wrapper>')
-
+        
 if __name__ == "__main__":
     unittest.main()        
