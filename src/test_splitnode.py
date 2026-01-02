@@ -190,7 +190,7 @@ class TestSplitNode(unittest.TestCase):
         
         self.assertEqual(split_nodes_italic, expected_texts_italic)
         
-        
+    # TODO: Later implement nested delimiter handling    
     # def test_split_nodes_delimiter_mixed_nested(self):
     #     nodes = [
     #         TextNode("This is **bold and __italic__ inside bold** text.", TextType.PLAIN),

@@ -1,3 +1,5 @@
+import re
+
 from htmlnode import HTMLNode, LeafNode
 from textnode import TextNode, TextType
 
@@ -26,3 +28,33 @@ def convert_textnode_to_htmlnode(text_node):
     
     else:
         raise ValueError(f"Unsupported TextType: {text_node.text_type}")
+    
+    
+def extract_markdown_images(text):
+    """Takes raw markdown text and returns a list of tuples. 
+    Each tuple should contain the alt text and the URL of any markdown images. 
+    
+    Args:
+        text (string): Raw markdown text containing image(s).
+
+    Returns:
+        List[Tuple]: Returns a list of tuples with (alt_text, url) for each image found.
+    """
+    
+    results = re.findall(r"!\[([^\[\]]*)\]\(([^\(\)]*)\)", text)
+    return results
+
+
+def extract_markdown_links(text):
+    """Takes raw markdown text and returns a list of tuples. 
+    Each tuple should contain the link text and the URL of any markdown links. 
+    
+    Args:
+        text (string): Raw markdown text containing link(s).
+    Returns:
+        List[Tuple]: Returns a list of tuples with (link_text, url) for each
+        link found.
+    """
+    
+    results = re.findall(r"(?<!!)\[([^\[\]]*)\]\(([^\(\)]*)\)", text)
+    return results
