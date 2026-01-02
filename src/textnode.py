@@ -22,4 +22,4 @@ class TextNode():
                 self.url == other.url)
         
     def __repr__(self):
-        return f"TextNode({self.text}, {self.text_type.value}, {self.url})"
+        return f"TextNode(text='{self.text}', value='{self.text_type.value}', url='{self.url}')"
